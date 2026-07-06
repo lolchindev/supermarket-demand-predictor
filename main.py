@@ -3,7 +3,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 
-df = pd.read_csv(r"D:\Coding & extra\VS Code~\IP\superstore_final_dataset.csv")
+current_dir = os.path.dirname(os.path.abspath(__file__))
+csv_path = os.path.join(current_dir, "superstore_final_dataset.csv")
+df = pd.read_csv(csv_path)
 
 landmarks = {'📈Stock UP' : '#46E809', '✅Normal' : '#219DFF', '📉Keep LOW' : '#E80909'}
 
@@ -95,9 +97,9 @@ def dashboard(his_df, region_df, final, sub_category):
 
     fig.suptitle(
         f'Demand Prediction: {sub_category}\n'
-        f'Recommendation: {final['Recommendation']}\n'
-        f'Predicted Sales ($ in millions): {final['Predicted_Sales']}\n'
-        f'Buffer Stock ($ in millions): {final['Buffered_Sales']}',
+        f"Recommendation: {final['Recommendation']}\n"
+        f"Predicted Sales ($ in millions): {final['Predicted_Sales']}\n"
+        f"Buffer Stock ($ in millions): {final['Buffered_Sales']}",
         fontsize = 14, fontweight = 'bold', color = '#6BB2CF'
     )
 
@@ -161,15 +163,15 @@ def summary(final, region_df):
     print(f"  PREDICTION SUMMARY: {final['Sub_Category']}")
     print("─"*50 + "\033[0m")
 
-    print(f' Base Trend: {final['Trend_Value']:.2f}')
-    print(f' Predicted Sales ($ in millions): {final['Predicted_Sales']:.2f}')
-    print(f' Buffered (+10%) ($ in millions): \033[38;2;173;161;0m{final['Buffered_Sales']:.2f}\033[0m')
-    print(f' Action Required: {c}{rec}\033[0m\n')
+    print(f" Base Trend: {final['Trend_Value']:.2f}")
+    print(f" Predicted Sales ($ in millions): {final['Predicted_Sales']:.2f}")
+    print(f" Buffered (+10%) ($ in millions): \033[38;2;173;161;0m{final['Buffered_Sales']:.2f}\033[0m")
+    print(f" Action Required: {c}{rec}\033[0m\n")
 
     print(' Regional Breakdown ($ in millions)')
     for _, row in region_df.iterrows():
         r_color = colors.get(row['Recommendation'], '\033[0m')
-        print(f'   {row['Region']:<10} {row['Predicted_Sales']:.2f}  {r_color}{row['Recommendation']}\033[0m')
+        print(f"   {row['Region']:<10} {row['Predicted_Sales']:.2f}  {r_color}{row['Recommendation']}\033[0m")
 
     print("\n\033[90m  *Note: Sales values are in log1p scale. Buffered adds 10% safety margin.\033[0m\n")
 
